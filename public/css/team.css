@@ -1,0 +1,99 @@
+.wrapper {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    font-size: 2.9em;
+    text-align: center;
+}
+
+#subtitle {
+    font-size: 2em;
+    text-align: center;
+}
+
+.team {
+    display: flex;
+    flex-direction: row;
+    padding-block: 30px;
+    width: 90%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px 10px
+}
+
+.team .cell {
+    padding-inline: 10px;
+}
+
+.team .cell .member {
+    background-color: white;
+    border: 1px solid #212529;
+    border-radius: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    gap: 5px 0px;
+}
+
+.team .cell .member #name {
+    font-size: 1.5em;
+}
+
+.team .cell .member #role {
+    font-size: 1.1em;
+    color: gray;
+}
+
+.team .cell .member #instagram {
+    font-size: 1.1em;
+    text-decoration: none;
+    color: #212529;
+}
+
+.team .cell .member #instagram .icon {
+
+vertical-align: middle;
+
+}
+
+@media screen and (max-width: 600px) { 
+
+    #title {
+        font-size: 7vw;
+        text-align: center;
+    }
+    
+    #subtitle {
+        font-size: 5vw;
+        text-align: center;
+    }
+
+}
+
+/* 
+
+//////////// DARK MODE ////////////
+
+*/
+
+.dark-mode .team .cell .member {
+    background-color: #212529;
+    border: 1px solid white;
+}
+
+.dark-mode .team .cell .member #role {
+    color: rgb(216, 216, 216);
+}
+
+.dark-mode .team .cell .member #instagram {
+    color: white;
+}

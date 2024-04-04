@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    background-color: #f2f2f2;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color: #212529;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 1px;
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray; 
+    border-radius: 10px;
+}
+
+.header {
+    background-color: #fff;
+    width: 100%;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav-logo img {
+    position: relative;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.menu-icon {
+    padding: 5px 10px;
+    font-size: 30px;
+    display: none;
+    cursor: pointer;
+    background-color: #212529;
+    color: #f2f2f2;
+    border-radius: 10%;
+    position: relative;
+    right: 10px;
+}
+
+.navbar {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    right: 14px;
+}
+
+.navbar a {
+    font-size: 16px;
+    color: #212529;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #fff;
+    background-color: #212529;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.switch-mobile {
+    display: none;
+    right: 10px;
+}
+
+.switchDiv-mobile {
+    padding-right: 10px;
+
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #212529;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.switch input:checked + .slider {
+    background-color: #212529;
+}
+  
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #212529;
+}
+  
+.switch input:checked + .slider:before {
+    -webkit-transform: translateX(17px);
+    -ms-transform: translateX(17px);
+    transform: translateX(17px);
+}
+  
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 600px) {
+    .navbar a {
+        display: none;
+        width: 100%;
+    }
+    .nav-bar {
+        width: 100%;
+        margin-inline: auto;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-bottom: 5px;
+    }
+    .header {
+        display: block;
+    }
+    .menu-icon {
+        display: block;
+    }
+    .navbar.responsive {
+        flex-direction: column;
+    }
+    .navbar.responsive a {
+        display: block;
+    }
+    
+    .switch-mobile {
+        display: block;
+    }
+    .switch-pc {
+        display: none;
+    }
+}
+
+/* 
+
+//////////// DARK MODE ////////////
+
+*/
+
+.dark-mode {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background-color: #191c1f;
+    color: white;
+}
+
+.dark-mode .header {
+    background-color: #212529;
+}
+
+
+.dark-mode .menu-icon {
+    background-color: white;
+    color: #212529;
+}
+
+.dark-mode .navbar a {
+    color: white;
+}
+
+.dark-mode .navbar a:hover {
+    color: #212529;
+    background-color: white;
+}
+  
+.dark-mode .slider {
+    background-color: white;
+}
+  
+.dark-mode .slider:before {
+    background-color: #212529;
+}
+  
+.dark-mode .switch input:checked + .slider {
+    background-color: white;
+}
+  
+.dark-mode .switch input:focus + .slider {
+    box-shadow: 0 0 1px white;
+}

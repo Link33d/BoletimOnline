@@ -1,0 +1,83 @@
+<div class="tableWrapper">
+
+    <div class="content" id="pictureTarget">
+        <div>
+            <h1 class="title">Tabela de notas - Rômulo Almeida</h1>
+            <h2 class="student"><%= student[1] %> - <%= student[0] %></h2>
+        </div>
+        <div class="unitBlock">
+            <table class="table">
+                <!-- Cabeçalho da tabela -->
+                <tr class="tableHeader">
+                    <th class="discipline">Disciplina</th>
+                    <th>1ª Uni.</th>
+                    <th>2ª Uni.</th>
+                    <th>3ª Uni.</th>
+                    <th>Total</th>
+                </tr>
+                <% for (var i = 0; i < disciplines.length; i++) { %>
+                    <!-- Loop para cada disciplina -->
+                    <tr>
+                        <% 
+                            // Calcula as notas do aluno para cada unidade e o total
+                            let gradePoint = [
+                                parseFloat(gradePoints[0][i]) || 0, // Nota da primeira unidade, se não existir, considera 0
+                                parseFloat(gradePoints[1][i]) || 0, // Nota da segunda unidade, se não existir, considera 0
+                                parseFloat(gradePoints[2][i]) || 0  // Nota da terceira unidade, se não existir, considera 0
+                            ]
+
+                            // Calcula a média total das notas e arredonda para uma casa decimal
+                            gradePoint.push((gradePoint[0] + gradePoint[1] + gradePoint[2]).toFixed(1))
+
+                            // Calcula a média mínima considerando que cada unidade tem peso igual
+                            let min = 0;
+                            if (gradePoint[0] != 0) min+=5 // Se a nota da primeira unidade não for zero, adiciona 5 à média mínima
+                            if (gradePoint[1] != 0) min+=5 // Se a nota da primeira unidade não for zero, adiciona 5 à média mínima
+                            if (gradePoint[2] != 0) min+=5 // Se a nota da terceira unidade não for zero, adiciona 5 à média mínima
+                            min = min/3 // Divide a soma das notas mínimas pelo número de unidades para obter a média mínima
+
+                            // Função para determinar a cor com base na média mínima
+                            function getColor(gradePoint, min_) {
+
+                                if (gradePoint == 0 || !min_) return; // Se a nota for zero ou não houver média mínima, não define cor
+                                if (gradePoint < min_) return "red"; // Se a nota for menor que a média mínima, retorna "red"
+                                if (gradePoint >= min_) return "green" // Se a nota for maior ou igual à média mínima, retorna "green"
+                            }
+
+                            // Função para formatar o número da nota, substitui 0 por espaço em branco
+                            let formatNumber = (number) => (number != 0) ? number : " ";
+                        %>
+                        <!-- Nome da disciplina -->
+                        <th class="discipline"><%= disciplines[i] %></th>
+
+                        <!-- Notas das unidades e total -->
+                        <td class="<%= getColor(gradePoint[0]) %>"><%= formatNumber(gradePoint[0]) %></td>
+                        <td class="<%= getColor(gradePoint[1]) %>"><%= formatNumber(gradePoint[1]) %></td>
+                        <td class="<%= getColor(gradePoint[2]) %>"><%= formatNumber(gradePoint[2]) %></td>
+                        <td class="<%= getColor(gradePoint[3]/3, min) %>"><%= gradePoint[3] %></td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+
+    <!-- Botões para baixar a tabela como imagem e voltar -->
+    <div class="backDiv">
+
+        <!-- Botão para baixar a tabela como imagem -->
+        <button class="button" onclick='(() => {
+            let text = this.innerHTML
+            this.innerHTML = "<div class=\"loader\"></div>"
+            let target = document.getElementById("pictureTarget")
+            let student = "<%- student[1] %>"
+            downloadPngTable(student, target).then(() => this.innerHTML = text)
+        })()'>Baixar Imagem</button>
+
+        <!-- Botão para voltar -->
+        <button class="button" onclick='(() => {
+            this.innerHTML = "<div class=\"loader\"></div>"
+            logout()
+        })()'>Voltar</button>
+    </div>
+</div>
+

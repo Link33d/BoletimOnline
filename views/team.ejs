@@ -1,0 +1,31 @@
+<%- include('template/header.ejs', { page }); %>
+
+<link href="/css/team.css" rel="stylesheet" type="text/css">
+
+<div class="wrapper">
+    <label id="title">Equipe do Grêmio Estudantil</label>
+    <label id="subtitle">Conheça quem são as pessoas incríveis que atuam na nossa equipe!</label>
+
+    <div class="team">
+        <!-- Loop para renderizar cada membro da equipe -->
+        <% for (let member of team) { %>
+        <div class="cell">
+            <div class="member">
+                <!-- Nome do membro -->
+                <label id="name"><%= member[0] %></label>
+
+                <!-- Cargo do membro -->
+                <label id="role"><%= member[1] %></label>
+
+                <!-- Link para a conta do Instagram do membro (se existir) -->
+                <% if (member[2]) { %>
+                    <a href="https://instagram.com/<%= member[2].toLowerCase() %>" id="instagram"><span class="icon"><ion-icon name="logo-instagram"></ion-icon></span> <%= member[2] %></a>
+                <% } else {%>
+                    <!-- Se o membro não tiver conta no Instagram, exibe um link vazio -->
+                    <a id="instagram">ㅤ</a>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>

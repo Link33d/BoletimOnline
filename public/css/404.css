@@ -1,0 +1,96 @@
+.notFound {
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+    flex-direction: column;
+}
+
+.notFoundText {
+    text-align: center;
+    line-height: 0.95;
+}
+
+
+.notFoundText * {
+    margin: 0;
+}
+
+.notFoundText #text404-1 {
+    font-size: 2em;
+}
+
+.notFoundText #text404-2 {
+    font-family: montserrat,sans-serif;
+    font-size: 20em;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -40px;
+    margin-left: -20px;
+    text-shadow: -4px 3px 0px white
+}
+
+.notFoundText #text404-3 {
+    font-size: 1.8em;
+}
+
+.notFoundButton {
+    width: 400px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.notFoundButton button {
+    width: 150px;
+    height: 45px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    background: #212529;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .notFoundText #text404-1 {
+        font-size: 6vw;
+    }
+    
+    .notFoundText #text404-2 {
+        font-size: 55vw;
+        font-weight: 900;
+        letter-spacing: -40px;
+        margin-left: -20px;
+    }
+    
+    .notFoundText #text404-3 {
+        font-size: 4.5vw;
+    }
+    
+    .notFoundButton {
+        width: 90vw;
+        padding-top: 20px;
+    }
+}
+
+/* 
+
+//////////// DARK MODE ////////////
+
+*/
+
+.dark-mode .notFoundText #text404-2 {
+    text-shadow: -7px 6px 0px #212529
+}
+
+.dark-mode .notFoundButton button {
+    background: white;
+    color: #212529;
+}

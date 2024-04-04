@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= page %></title>
+    <meta name="description" content="Site do Grêmio Estudantil do Colégio Dr Rômulo Almeida!">
+    <!-- <meta name='keywords' content='your, tags'> -->
+    <meta name='language' content='pt-br'>
+    <meta name="theme-color" content="#001aff">
+    <link rel="icon" type="image/png" href="images/gremio_logo.png" />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href="/css/header.css" rel="stylesheet" type="text/css">   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="nav-bar">
+            <div class="nav-logo">
+                <img src="images/gremio_logo.png">
+            </div>
+            <div class="menu-icon" id="menuIcon" onclick="toggleMenu()">&#9776;</div>
+            <div class="switchDiv switchDiv-mobile">
+                <label class="switch switch-mobile">
+                    <input type="checkbox" id="switchMobile">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            
+        </div>
+        <!-- Menu de navegação -->
+        <div class="navbar" id="myNavbar">
+            <a href="/">Página Inicial</a>
+            <a href="/boletimonline">Boletim Online</a>
+            <a href="/equipe">Equipe</a>
+            <a href="/contato">Contato</a>
+        </div>
+
+        <label class="switch switch-pc">
+            <input type="checkbox" id="switchPc">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <script>
+
+        // Função para alternar o menu responsivo
+        function toggleMenu() {
+            document.querySelector(".navbar").classList.toggle("responsive");
+        }
+
+        // Elementos de switch para o modo escuro nas versões para PC e mobile
+        const switchPc = document.getElementById("switchPc");
+        const switchMobile = document.getElementById("switchMobile");
+
+        // Verifica se o modo escuro foi ativado anteriormente e ajusta os switch de acordo
+        if (localStorage.getItem("DarkMode") == "true") {
+            document.querySelector("body").classList.add("dark-mode") // Adiciona a classe 'dark-mode' ao corpo
+            switchMobile.checked = true; // Define o switch de mobile como marcado
+            switchPc.checked = true; // Define o switch de PC como marcado
+        }
+
+        // Função para alternar o modo para escuro ou claro
+        function switchMode(value) {
+            switchMobile.checked = value; // Define o estado do switch de mobile conforme o valor fornecido
+            switchPc.checked = value; // Define o estado do comutador de PC conforme o valor fornecido
+
+            // Adiciona ou remove a classe 'dark-mode' do corpo conforme o valor fornecido
+            if (value) document.querySelector("body").classList.add("dark-mode");
+            else document.querySelector("body").classList.remove("dark-mode");
+
+            // Salva o estado do modo escuro no armazenamento local
+            localStorage.setItem("DarkMode", value)
+        }
+
+        // Adiciona ou remove a classe 'dark-mode' do corpo quando o switch de PC é alterado
+        switchPc.addEventListener("change", function () {
+            switchMode(switchPc.checked);
+        });
+
+        // Adiciona ou remove a classe 'dark-mode' do corpo quando o switch de PC é alterado
+        switchMobile.addEventListener("change", function () {
+            switchMode(switchMobile.checked);
+        });
+    </script>
+    <br>
+    <div id="content">

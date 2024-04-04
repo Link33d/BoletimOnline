@@ -1,0 +1,38 @@
+<%- include('template/header.ejs', { page }); %>
+
+<link href="/css/index.css" rel="stylesheet" type="text/css">
+
+<!-- Array de tópicos, cada item contém um título e conteúdo -->
+<% 
+    const topics = [
+        [
+            "Quem somos?", 
+            "Desde dezembro de 2022, todos nós procuramos reerguer o grêmio do Colégio Democrático Dr. Rômulo Almeida para que os alunos tenham um apoio especial de um grupo de alunos que passam e entendem o que acontece no âmbito escolar."
+        ],
+        [
+            "Boletim Online", 
+            "Nós da equipe do grêmio estamos felizes em anunciar nosso website, juntamente com um <a href='/boletimonline'>Boletim online</a> feito pelos próprios alunos!"
+        ],
+        [
+            "Nos siga!", 
+            "Fique por dentro de tudo que postamos no <a href='https://www.instagram.com/gremioromulo/'>instagram oficial</a> para não perder nenhuma informação importante!"
+        ]
+    ]
+%>
+
+<div class="wrapper">
+    <label id="title">Grêmio Estudantil do Rômulo Almeida</label>
+
+    <div class="content">
+        <% for (let item of topics) { %>
+            <!-- Para cada item do array de tópicos, renderiza uma caixa de texto -->
+            <div class="textBox">
+                <!-- Título do tópico -->
+                <label class="textBoxTitle"><%=item[0]%></label>
+
+                <!-- Conteúdo do tópico -->
+                <label class="textBoxContent"><%-item[1]%></label>
+            </div>
+        <% } %>
+    </div>
+</div>

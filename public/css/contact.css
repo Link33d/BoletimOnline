@@ -1,0 +1,118 @@
+.wrapper {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    font-size: 2.9em;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.contact {
+    display: flex;
+    flex-direction: row;
+    padding-block: 50px;
+    width: 800px;
+    justify-content: center;
+    gap: 30px 10px;
+    background-color: white;
+    border: 1px solid #212529;
+    border-radius: 10px;
+    align-items: flex-start;
+}
+
+.contact img {
+    width: 150px;
+    height: 150px;
+}
+
+.contact .border {
+    align-self: center;
+    height: 300px;
+    border-left: 2px solid gray;
+}
+
+.contact .member {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 10px 0px;
+}
+
+.contact .member #name {
+    font-size: 1.5em;
+}
+
+.contact .member .link {
+    font-size: 1.3em;
+    text-decoration: none;
+    color: #212529;
+}
+
+.contact .member .link .icon {
+
+vertical-align: middle;
+
+}
+
+@media screen and (max-width: 600px) { 
+
+    #title {
+        font-size: 7vw;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width: 800px) { 
+
+    .contact {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact .border {
+        height: 0;
+        width: 70vw;
+        border-left: 0px solid gray;
+        border-bottom: 2px solid gray;
+
+    }
+}
+
+/* 
+
+//////////// DARK MODE ////////////
+
+*/
+
+.dark-mode .contact {
+    background-color: #212529;
+    border: 1px solid white;
+}
+
+
+.dark-mode .contact .border {
+    border-left: 2px solid rgb(216, 216, 216);
+}
+
+.dark-mode .contact .member .link {
+    color: white;
+}
+
+@media screen and (max-width: 800px) { 
+
+    .dark-mode .contact .border {
+        border-left: 0px solid rgb(216, 216, 216);
+        border-bottom: 2px solid rgb(216, 216, 216);
+
+    }
+}

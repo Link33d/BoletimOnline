@@ -1,0 +1,286 @@
+<%- include('template/header.ejs', { page }); %>
+
+<!-- Objeto que mapeia os nomes dos meses para o número de dias em cada mês -->
+<% const months = {
+    'janeiro': 31, 
+    'fevereiro': 29, 
+    'março': 31, 
+    'abril': 30, 
+    'maio': 31, 
+    'junho': 30, 
+    'julho': 31, 
+    'agosto': 31, 
+    'setembro': 30, 
+    'outubro': 31, 
+    'novembro': 30, 
+    'dezembro': 31
+} 
+%>
+<link href="/css/boletim.css" rel="stylesheet" type="text/css">
+<link href="/css/table.css" rel="stylesheet" type="text/css">   
+
+<div id="container">
+    <div class="wrapper">
+        <div class="form-box login">
+            <div class="logo">
+                <img src="images/cedra_logo.png" style="border-radius: 25%;">
+                <div class="border"></div>
+                <img src="images/gremio_logo.png" style="border-radius: 50%;">
+            </div>
+            
+            <h2>Boletim Online</h2>
+            <form action="" method="post" id="loginForm" autocomplete="off">
+                <div class="input-box" id="input-box-name">
+                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                    <input type="text" name="name" id="login-name" placeholder=" ">
+                    <label class="text inputText">Nome Completo</label>
+                    <label class="err"></label>
+                </div>
+                <div class="input-box" id="input-box-pass">
+                    <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
+                    <label class="text inputDate">Data de Aniversário</label>
+                    <div id="dateSelector">
+                        <!-- Seletor para o dia de nascimento -->
+                        <select id="dateSelector-day">
+                            <% for (let i = 1; i < 32; i++) { %>
+                                <option value=<%= i %>><%= i %></option>
+                            <% } %>
+                        </select>
+                        <span>de</span>
+                        <!-- Seletor para o mês de nascimento -->
+                        <select id="dateSelector-month">
+                            <% for (let month in Object.keys(months)) { %>       
+                                <option value=<%= parseInt(month) %>><%= Object.keys(months)[month] %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <label class="err"></label>
+                </div>
+                <button type="submit" class="btn" id="loginButton">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        // Converte a string JSON em um objeto JavaScript contendo os meses
+        const months = JSON.parse(`<%- JSON.stringify(months) %>`)
+
+        // Seletores do HTML
+        const monthSelector = document.getElementById("dateSelector-month")
+        const daySelector = document.getElementById("dateSelector-day")
+
+        // Variável para controle de carregamento
+        var loading = false;
+
+        // Função para limpar mensagens de erro
+        function clearErr(type) {
+
+            let inputBox
+
+            // Determina qual caixa de entrada está sendo tratada (nome ou data de nascimento)
+            if (type == "name") inputBox = document.getElementById("input-box-name") 
+            else inputBox = document.getElementById("input-box-pass")
+
+            // Remove a classe de erro e limpa a mensagem de erro
+            inputBox.classList.remove("error");
+            inputBox.getElementsByClassName("err")[0].textContent = "";
+
+        }
+
+        // Função para exibir mensagens de erro
+        function printErr(type, message) {
+            let inputBox
+
+            // Determina qual caixa de entrada está sendo tratada (nome ou data de nascimento)
+            if (type == "name") inputBox = document.getElementById("input-box-name") 
+            else inputBox = document.getElementById("input-box-pass")
+
+            // Adiciona a classe de erro e exibe a mensagem de erro
+            inputBox.classList.add("error");
+            inputBox.getElementsByClassName("err")[0].textContent = message;
+
+        }
+
+        // Limpa mensagens de erro ao focar na caixa de entrada de nome
+        document.getElementById("input-box-name").addEventListener("focusin", () => clearErr("name"))
+        // Limpa mensagens de erro ao focar na caixa de entrada de data de nascimento
+        document.getElementById("input-box-pass").addEventListener("focusin", () => clearErr("pass"))
+
+        // Evento de mudança no seletor de mês
+        monthSelector.addEventListener("change", (e) => {
+
+            // Número de dias atualmente exibidos no seletor de dia
+            let days = daySelector.length;
+
+            // Número de dias correspondente ao mês selecionado
+            let newDays = months[Object.keys(months)[monthSelector.value]];
+
+            // Adiciona ou remove dias no seletor de dia conforme necessário
+            if (days < newDays) {
+                // Adiciona dias extras ao seletor de dia
+                for (let i = 0; i < newDays - days; i++) {
+                    let value = days + i + 1;
+                    daySelector.insertAdjacentHTML('beforeend', `<option value=${value}>${value}</option>`)
+                }
+            } else {
+                // Remove dias extras do seletor de dia
+                for (let i = 0; i < days - newDays; i++) {
+                    daySelector.removeChild(daySelector.lastChild)
+                }
+            }
+        })
+
+        // Função para alterar o estado de carregamento e atualizar o texto do botão de login
+        function changeLoading(load) {
+
+            // Atualiza a variável de carregamento
+            loading = load;
+
+            // Atualiza o texto do botão de login com um spinner de carregamento ou "Entrar"
+            document.getElementById("loginButton").innerHTML = ( load ? "<div class=\"loader\"></div>" : "Entrar" )
+        }
+
+        // Função para realizar o login do usuário
+        function login(user) {
+            // Define o estado de carregamento como verdadeiro para indicar que o login está em andamento
+            changeLoading(true)
+
+            // Realiza uma solicitação para obter os dados do aluno com base no nome e data de nascimento fornecidos
+            fetch(`/boletimonline/getStudent?name=${user.name}&birthdate=${user.pass}&type=html`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+                //body: JSON.stringify(user)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Quando a resposta é recebida, define o estado de carregamento como falso
+                changeLoading(false)
+
+                // Verifica se a solicitação foi bem-sucedida ou não
+                if (data.success == false) {
+                    // Se houver erros, exibe as mensagens de erro correspondentes
+                    if (data.errorType == 1) return printErr("name", data.errorMessage)
+                    if (data.errorType == 2) return printErr("pass", data.errorMessage)
+                    console.log(data)
+                    return alert("Ocorreu um erro desconhecido!\n"+data.errorMessage)
+                } else {
+                    // Se o login for bem-sucedido, armazena os detalhes do usuário no armazenamento local
+                    localStorage.setItem("userLogin", JSON.stringify(user))
+                    
+                    // Substitui o conteúdo do contêiner pelo conteúdo da resposta HTML
+                    document.getElementById("container").innerHTML = data.response;
+                }
+            })
+            .catch(error => {
+                // Se ocorrer um erro na solicitação, define o estado de carregamento como falso e exibe uma mensagem de erro
+                changeLoading(false)
+                console.log(error)
+                return alert("Ocorreu um erro desconhecido!\n" + error)
+            });
+        }
+
+        // Verifica se há detalhes de login salvos no armazenamento local
+        if (localStorage.getItem("userLogin")) {
+
+            // Se houver detalhes de login salvos, preenche o campo de nome de usuário com o nome salvo e realiza o login automaticamente
+            document.getElementById("login-name").value = JSON.parse(localStorage.getItem("userLogin")).name
+            login(JSON.parse(localStorage.getItem("userLogin")))
+        }
+
+        // Adiciona um ouvinte de evento para o envio do formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            // Verifica se o carregamento está em andamento; se estiver, interrompe o envio do formulário
+            if (loading == true) {
+                return;
+            }
+
+            // Limpa quaisquer mensagens de erro existentes nos campos de entrada
+            clearErr("name")
+            clearErr("pass")
+            
+            // Obtém o valor do campo de nome de usuário
+            let name = document.getElementById("login-name");
+
+            // Obtém os valores selecionados para o dia e mês de nascimento
+            let day = daySelector.value;
+            let month = "" + (parseInt(monthSelector.value)+1);
+
+            // Formata o dia e mês para terem dois dígitos (por exemplo, 05 em vez de 5)
+            if (day.length == 1) day = "0"+day;
+            if (month.length == 1) month = "0"+month;
+
+            // Combina o dia e mês formatados para formar a senha
+            let pass = day + month;
+
+            // Verifica se o campo de nome de usuário está vazio; se estiver, exibe uma mensagem de erro
+            if (!name.value) return printErr("name", "É necessário informar o seu nome!");
+
+            // Realiza o login com o nome de usuário e a senha obtidos
+            login({name: name.value, pass: pass })
+
+        });
+
+    </script>
+</div>
+
+<script>
+
+    // Função para efetuar logout do usuário
+    function logout() {
+
+        // Remove os detalhes de login do usuário do armazenamento local
+        localStorage.removeItem("userLogin")
+
+        // Recarrega a página para efetuar logout
+        window.location.reload()
+
+    }
+
+    // Função para fazer o download de uma tabela como imagem PNG
+    function downloadPngTable(student, target) {
+
+        // Retorna uma promessa que resolve ou rejeita com base no resultado do download
+        return new Promise((resolve, reject) => {
+
+            // Converte o conteúdo HTML do alvo em uma imagem blob PNG
+            domtoimage.toBlob(target)
+            .then(async (blob) => {
+
+                // Cria um URL para o blob da imagem
+                const imageURL = await URL.createObjectURL(blob)
+
+                // Cria um link de download
+                const link = await document.createElement('a')
+                link.href = await imageURL
+
+                // Define o nome do arquivo de download (remove espaços e pontos do nome do aluno)
+                link.download = `notas ${student.toLowerCase().replace(/\./g, "")}.png`
+
+                // Adiciona o link ao corpo do documento
+                await document.body.appendChild(link)
+
+                // Simula o clique no link para iniciar o download
+                await link.click()
+
+                // Remove o link do corpo do documento após o download
+                await document.body.removeChild(link)
+
+                // Resolve a promessa
+                resolve()
+            })
+            .catch(function (error) {
+
+                // Em caso de erro, resolve a promessa e exibe um alerta
+                resolve()
+                alert('Alguma coisa deu errada!', error);
+            });
+        })
+    }
+</script>
+
+</html>
