@@ -4,6 +4,7 @@ O Boletim Online é uma aplicação web que permite aos alunos do meu colégio a
 
 O site originalmente utilizava a API do Google Sheets para baixar as notas das planilhas dos professores e converter os arquivos do formato Excel para arquivos CSV. Porém, devido à necessidade de proteger a privacidade dos alunos, criei uma aplicação Node.js chamada [utils/GenerateRandomDB.js](utils/GenerateRandomDB.js). Essa aplicação gera bancos de dados de alunos e salas de aula com nomes aleatórios e informações simuladas de notas e datas de nascimento. Você pode configurar o tamanho das salas e a quantidade total de alunos. Os arquivos CSV são gerados nos diretórios [database/studentName](database/studentName) e [database/studentName](database/studentName).
 
+Para facilitar os testes, disponibilizei todos os possíveis logins em http://localhost:3000/boletimonline/getStudents (não disponível na versão do site por motivos de segurança).
 
 ## Requisitos
 
