@@ -44,18 +44,18 @@ Para facilitar os testes, disponibilizei todos os possíveis logins em http://lo
 ## Detalhes
 
 1. **Banco de dados**
-- Pode ser encontrado no diretório [database](database)
-- Pode ser gerado quantas vezes quiser através do [utils/GenerateRandomDB.js](utils/GenerateRandomDB.js)
-- É lido e interpretado através do arquivo [utils/database.js](utils/database.js)
+    - Pode ser encontrado no diretório [database](database)
+    - Pode ser gerado quantas vezes quiser através do [utils/GenerateRandomDB.js](utils/GenerateRandomDB.js)
+    - É lido e interpretado através do arquivo [utils/database.js](utils/database.js)
 
 2. **Backend** 
-- A rota principal está em [index.js](index.js)
-- A lógica por trás de toda API de envio de nota está em [routers/boletim.js](routers/boletim.js)
+    - A rota principal está em [index.js](index.js)
+    - A lógica por trás de toda API de envio de nota está em [routers/boletim.js](routers/boletim.js)
 
 3. **Frontend**
-- Todos os arquivos de frontend estão em [views](views), e os de estilização em [public/css](public/css)
-- O arquivo que recebe as informações do usuário e procura na API pode ser encontrado em [views/boletim.ejs](views/boletim.ejs)
-- O arquivo que recebe a resposta da API e interpreta o objeto JSON de notas pode ser encontrado em [views/table.ejs](views/table.ejs)
+    - Todos os arquivos de frontend estão em [views](views), e os de estilização em [public/css](public/css)
+    - O arquivo que recebe as informações do usuário e procura na API pode ser encontrado em [views/boletim.ejs](views/boletim.ejs)
+    - O arquivo que recebe a resposta da API e interpreta o objeto JSON de notas pode ser encontrado em [views/table.ejs](views/table.ejs)
 
 ## Contribuição
 
