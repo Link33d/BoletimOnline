@@ -36,9 +36,9 @@ router.get("/getStudents", async (req, res) => {
             fileContent = fileContent.split('\n')
             
             // Itera sobre cada linha do arquivo
-            for (let student of file) {
+            for (let student of fileContent) {
                 // Divide a linha em colunas
-                const columns = line.split(",");
+                const columns = student.split(",");
 
                 // Verifica se há dados válidos na linha
                 if (columns.length >= 3) {
@@ -80,15 +80,15 @@ router.get("/getStudent", async (req, res) => {
 
     /// Procura o aluno pelo nome no banco de dados
     let studentRow = await db.findStudent(name);
-    
+
     // Verifica se o aluno existe e se a data de nascimento está correta
     if (!studentRow) return res.json({ success: false, errorType: 1, errorMessage: "Aluno não encontrado no banco de dados!" });
-    if (studentRow.birthdate !== birthdate) return res.json({ success: false, errorType: 2, errorMessage: "Data de nascimento incorreta!" });
+    if (studentRow[2] !== birthdate) return res.json({ success: false, errorType: 2, errorMessage: "Data de nascimento incorreta!" });
 
     try {
         
         // Busca os dados do aluno na base de dados de sua turma
-        let classroom = await db.getStudentClassData(studentRow);
+        let classroom = await db.getStudentByClassroomData(studentRow);
 
         // Verifica se ocorreu algum erro ao obter os dados da turma do aluno
         if (!classroom) return res.json({success: false, errorType: 0, errorMessage: "Ocorreu um erro ao exibir seus dados, contate a equipe!"}) 
@@ -103,7 +103,7 @@ router.get("/getStudent", async (req, res) => {
         let gradePoints = [[], [], []];
 
         // Preenche a matriz de notas do aluno com as notas das disciplinas
-        for (let index of disciplinesIndex) {
+        for (let index of disciplineIndexes) {
             
             gradePoints[0].push(classroom[1][index])
             gradePoints[1].push(classroom[1][index+1])
@@ -135,7 +135,7 @@ router.get("/getStudent", async (req, res) => {
                 break;
         }
     } catch (error) {
-        //console.error("Erro ao processar solicitação do aluno:", error.message);
+        console.error("Erro ao processar solicitação do aluno:", error.message);
         res.status(500).json({ success: false, errorType: 0, errorMessage: "Erro interno ao processar a solicitação." });
     }
 

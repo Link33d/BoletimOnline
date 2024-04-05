@@ -138,4 +138,4 @@ for (let key of Object.keys(classes)) {
   writeFile(filePath, `${disciplines}\n${classes[key].join("\n")}`);
 }
 
-console.log("Todo o banco de dados foi salvo!")
+console.log(`Foram gerados ${nameList} novos alunos!`)
